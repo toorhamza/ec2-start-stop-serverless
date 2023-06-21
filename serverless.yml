@@ -4,10 +4,21 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs18.x
+  region: eu-north-1  # Specify your desired AWS region here
+  environment:
+    region: ${opt:region, self:provider.region}
+
+custom:
+  esbuild:
+    minify: false
+    bundle: true
+  
+plugins:
+  - serverless-esbuild
 
 functions:
   api:
-    handler: index.handler
+    handler: handler.handler
     events:
       - httpApi:
           path: /
